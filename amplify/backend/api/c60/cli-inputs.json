@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "c60",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/TYokono/workspace/c60/amplify/backend/api/c60/schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authc605310b1d4"
+    }
+  }
+}
