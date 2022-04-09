@@ -77,7 +77,7 @@ export const onCreatePost = /* GraphQL */ `
       id
       name
       description
-      team {
+      user {
         id
         name
         posts {
@@ -100,7 +100,7 @@ export const onUpdatePost = /* GraphQL */ `
       id
       name
       description
-      team {
+      user {
         id
         name
         posts {
@@ -123,7 +123,7 @@ export const onDeletePost = /* GraphQL */ `
       id
       name
       description
-      team {
+      user {
         id
         name
         posts {

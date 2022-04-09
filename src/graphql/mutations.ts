@@ -89,7 +89,7 @@ export const createPost = /* GraphQL */ `
       id
       name
       description
-      team {
+      user {
         id
         name
         posts {
@@ -115,7 +115,7 @@ export const updatePost = /* GraphQL */ `
       id
       name
       description
-      team {
+      user {
         id
         name
         posts {
@@ -141,7 +141,7 @@ export const deletePost = /* GraphQL */ `
       id
       name
       description
-      team {
+      user {
         id
         name
         posts {

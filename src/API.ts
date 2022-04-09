@@ -75,7 +75,7 @@ export type Post = {
   id: string,
   name: string,
   description?: string | null,
-  team: User,
+  user: User,
   createdAt: string,
   updatedAt: string,
   userPostsId: string,
@@ -259,7 +259,7 @@ export type CreatePostMutation = {
     id: string,
     name: string,
     description?: string | null,
-    team:  {
+    user:  {
       __typename: "User",
       id: string,
       name: string,
@@ -289,7 +289,7 @@ export type UpdatePostMutation = {
     id: string,
     name: string,
     description?: string | null,
-    team:  {
+    user:  {
       __typename: "User",
       id: string,
       name: string,
@@ -319,7 +319,7 @@ export type DeletePostMutation = {
     id: string,
     name: string,
     description?: string | null,
-    team:  {
+    user:  {
       __typename: "User",
       id: string,
       name: string,
@@ -402,7 +402,7 @@ export type GetPostQuery = {
     id: string,
     name: string,
     description?: string | null,
-    team:  {
+    user:  {
       __typename: "User",
       id: string,
       name: string,
@@ -435,7 +435,7 @@ export type ListPostsQuery = {
       id: string,
       name: string,
       description?: string | null,
-      team:  {
+      user:  {
         __typename: "User",
         id: string,
         name: string,
@@ -549,7 +549,7 @@ export type OnCreatePostSubscription = {
     id: string,
     name: string,
     description?: string | null,
-    team:  {
+    user:  {
       __typename: "User",
       id: string,
       name: string,
@@ -578,7 +578,7 @@ export type OnUpdatePostSubscription = {
     id: string,
     name: string,
     description?: string | null,
-    team:  {
+    user:  {
       __typename: "User",
       id: string,
       name: string,
@@ -607,7 +607,7 @@ export type OnDeletePostSubscription = {
     id: string,
     name: string,
     description?: string | null,
-    team:  {
+    user:  {
       __typename: "User",
       id: string,
       name: string,

@@ -52,7 +52,7 @@ export const getPost = /* GraphQL */ `
       id
       name
       description
-      team {
+      user {
         id
         name
         posts {
@@ -80,7 +80,7 @@ export const listPosts = /* GraphQL */ `
         id
         name
         description
-        team {
+        user {
           id
           name
           createdAt
