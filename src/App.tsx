@@ -7,7 +7,12 @@ import '@aws-amplify/ui-react/styles.css';
 import awsExports from './aws-exports';
 Amplify.configure(awsExports);
 
-export const UserDataContext = createContext({});
+import UserData from './component/UserData';
+
+type UserDataContextType = {
+  userId: string;
+};
+export const UserDataContext = createContext<UserDataContextType>({ userId: '' });
 
 export default function App() {
   const [userId, setUserId] = useState<string>('');
@@ -30,7 +35,7 @@ export default function App() {
             });
           }
           return (
-            <UserDataContext.Provider value={{ userId, signOut }}>
+            <UserDataContext.Provider value={{ userId }}>
               <main>
                 <h1>Hello {user.username}</h1>
                 <h1>{userId}</h1>
@@ -43,6 +48,7 @@ export default function App() {
                   Sign out
                 </button>
               </main>
+              <UserData />
             </UserDataContext.Provider>
           );
         }}
