@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, createContext } from 'react';
 import { Amplify } from 'aws-amplify';
 
 import { AmplifyProvider, Authenticator } from '@aws-amplify/ui-react';
@@ -6,6 +6,8 @@ import '@aws-amplify/ui-react/styles.css';
 
 import awsExports from './aws-exports';
 Amplify.configure(awsExports);
+
+export const UserDataContext = createContext({});
 
 export default function App() {
   const [userId, setUserId] = useState<string>('');
@@ -28,18 +30,20 @@ export default function App() {
             });
           }
           return (
-            <main>
-              <h1>Hello {user.username}</h1>
-              <h1>{userId}</h1>
-              <button
-                onClick={() => {
-                  setUserId('');
-                  signOut();
-                }}
-              >
-                Sign out
-              </button>
-            </main>
+            <UserDataContext.Provider value={{ userId, signOut }}>
+              <main>
+                <h1>Hello {user.username}</h1>
+                <h1>{userId}</h1>
+                <button
+                  onClick={() => {
+                    setUserId('');
+                    signOut();
+                  }}
+                >
+                  Sign out
+                </button>
+              </main>
+            </UserDataContext.Provider>
           );
         }}
       </Authenticator>
