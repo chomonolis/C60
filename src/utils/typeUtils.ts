@@ -21,10 +21,7 @@
 //   }
 //   return false;
 // };
-export function hasProperty<K extends string>(
-  x: unknown,
-  ...name: K[]
-): x is { [M in K]: unknown } {
+export function hasProperty<K extends string>(x: unknown, ...name: K[]): x is { [M in K]: unknown } {
   return x instanceof Object && name.every((prop) => prop in x);
 }
 // 非同期関数のReturnType時にPromiseの中身を抽出する。
@@ -32,9 +29,7 @@ export function hasProperty<K extends string>(
 // type ContentItemsType = PromiseType<
 //   ReturnType<typeof ContentItemService.listContentItemsByContentId>
 // >;
-export type PromiseType<T extends Promise<any>> = T extends Promise<infer P>
-  ? P
-  : never;
+export type PromiseType<T extends Promise<unknown>> = T extends Promise<infer P> ? P : never;
 // Tips
 // 配列型から要素の型を取り出す方法。 indexed access operator([number]が肝)
 // type ContentItem = ContentItemArrayType[number]
