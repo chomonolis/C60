@@ -1,4 +1,4 @@
-import { useState, createContext } from 'react';
+import { createContext } from 'react';
 import { Amplify } from 'aws-amplify';
 
 import { AmplifyProvider, Authenticator } from '@aws-amplify/ui-react';
@@ -16,33 +16,24 @@ type UserDataContextType = {
 export const UserDataContext = createContext<UserDataContextType>({ userId: '' });
 
 export default function App() {
-  const [userId, setUserId] = useState<string>('');
   return (
     <AmplifyProvider>
       <Authenticator>
         {({ signOut, user }) => {
           if (user?.attributes && hasProperty(user.attributes, 'custom:userid')) {
-            if (typeof user.attributes['custom:userid'] === 'string' && user.attributes['custom:userid'] !== userId) {
-              setUserId(user.attributes['custom:userid']);
+            if (typeof user.attributes['custom:userid'] === 'string') {
+              return (
+                <UserDataContext.Provider value={{ userId: user.attributes['custom:userid'] }}>
+                  <main>
+                    <h1>Hello {user.username}</h1>
+                    <button onClick={signOut}>Sign out</button>
+                  </main>
+                  <UserData />
+                </UserDataContext.Provider>
+              );
             }
           }
-          return (
-            <UserDataContext.Provider value={{ userId }}>
-              <main>
-                <h1>Hello {user.username}</h1>
-                <h1>{userId}</h1>
-                <button
-                  onClick={() => {
-                    setUserId('');
-                    signOut();
-                  }}
-                >
-                  Sign out
-                </button>
-              </main>
-              <UserData />
-            </UserDataContext.Provider>
-          );
+          return <>Not Authenticated</>;
         }}
       </Authenticator>
     </AmplifyProvider>
