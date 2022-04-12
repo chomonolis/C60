@@ -21,6 +21,7 @@ const useUser = () => {
     } catch (err) {
       setErr(err);
     }
+    return undefined;
   }, []);
 
   const getUser = useCallback(async (id: string) => {
@@ -29,6 +30,7 @@ const useUser = () => {
     } catch (err) {
       setErr(err);
     }
+    return undefined;
   }, []);
 
   return { updateUser, getUser };
