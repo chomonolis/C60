@@ -1,18 +1,34 @@
-import { useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 
 import UserService, { UserServiceReturnType } from '../service/user.service';
 
 const useUser = () => {
+  const [err, setErr] = useState<unknown>();
+
+  useEffect(() => {
+    if (err) {
+      console.error('useUser Error : ', err);
+    }
+  }, [err]);
+
   const updateUser = useCallback(async (id: string, name?: string) => {
-    const res = await UserService.updateUser({
-      id,
-      name,
-    });
-    return res.data?.updateUser;
+    try {
+      const res = await UserService.updateUser({
+        id,
+        name,
+      });
+      return res.data?.updateUser;
+    } catch (err) {
+      setErr(err);
+    }
   }, []);
 
   const getUser = useCallback(async (id: string) => {
-    return await UserService.getUser(id);
+    try {
+      return await UserService.getUser(id);
+    } catch (err) {
+      setErr(err);
+    }
   }, []);
 
   return { updateUser, getUser };
