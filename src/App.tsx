@@ -8,6 +8,7 @@ import awsExports from './aws-exports';
 Amplify.configure(awsExports);
 
 import UserData from './component/UserData';
+import { hasProperty } from './utils/typeUtils';
 
 type UserDataContextType = {
   userId: string;
@@ -20,19 +21,10 @@ export default function App() {
     <AmplifyProvider>
       <Authenticator>
         {({ signOut, user }) => {
-          if (userId === '') {
-            user.getUserAttributes((err, result) => {
-              if (err) {
-                console.error(err);
-              }
-              if (result !== undefined) {
-                for (const obj of result) {
-                  if (obj.Name === 'custom:userid' && obj.Value !== userId) {
-                    setUserId(obj.Value);
-                  }
-                }
-              }
-            });
+          if (user?.attributes && hasProperty(user.attributes, 'custom:userid')) {
+            if (typeof user.attributes['custom:userid'] === 'string' && user.attributes['custom:userid'] !== userId) {
+              setUserId(user.attributes['custom:userid']);
+            }
           }
           return (
             <UserDataContext.Provider value={{ userId }}>
