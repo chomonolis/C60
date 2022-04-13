@@ -7,7 +7,7 @@ const usePost = () => {
 
   useEffect(() => {
     if (err) {
-      console.error(err);
+      console.error('usePost Error : ', err);
     }
   }, [err]);
 
