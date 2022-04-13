@@ -1,33 +1,61 @@
-import { useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import PostService, { PostServiceReturnType } from '../service/post.service';
 
 const usePost = () => {
+  const [err, setErr] = useState<unknown>();
+
+  useEffect(() => {
+    if (err) {
+      console.error('usePost Error : ', err);
+    }
+  }, [err]);
+
   const createPost = useCallback(async (userId: string, name: string, description?: string) => {
-    const res = await PostService.createPost({
-      name,
-      description,
-      userPostsId: userId,
-    });
-    return res.data?.createPost;
+    try {
+      const res = await PostService.createPost({
+        name,
+        description,
+        userPostsId: userId,
+      });
+      return res.data?.createPost;
+    } catch (err) {
+      setErr(err);
+    }
+    return undefined;
   }, []);
 
   const updatePost = useCallback(async (id: string, name?: string, description?: string) => {
-    const res = await PostService.updatePost({
-      id,
-      name,
-      description,
-    });
-    return res.data?.updatePost;
+    try {
+      const res = await PostService.updatePost({
+        id,
+        name,
+        description,
+      });
+      return res.data?.updatePost;
+    } catch (err) {
+      setErr(err);
+    }
+    return undefined;
   }, []);
 
   const deletePost = useCallback(async (id: string) => {
-    const res = await PostService.deletePost({ id });
-    return res.data?.deletePost;
+    try {
+      const res = await PostService.deletePost({ id });
+      return res.data?.deletePost;
+    } catch (err) {
+      setErr(err);
+    }
+    return undefined;
   }, []);
 
   const getPost = useCallback(async (id: string) => {
-    return await PostService.getPost(id);
+    try {
+      return await PostService.getPost(id);
+    } catch (err) {
+      setErr(err);
+    }
+    return undefined;
   }, []);
 
   return { createPost, updatePost, deletePost, getPost };
