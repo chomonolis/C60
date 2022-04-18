@@ -58,7 +58,16 @@ const usePost = () => {
     return undefined;
   }, []);
 
-  return { createPost, updatePost, deletePost, getPost };
+  const listPosts = useCallback(async () => {
+    try {
+      return await PostService.listPosts();
+    } catch (err) {
+      setErr(err);
+    }
+    return undefined;
+  }, []);
+
+  return { createPost, updatePost, deletePost, getPost, listPosts };
 };
 
 export type UsePostReturnType = {
@@ -66,6 +75,7 @@ export type UsePostReturnType = {
   updatePostRT: Exclude<PostServiceReturnType['updatePostRT']['data'], undefined>['updatePost'];
   deletePostRT: Exclude<PostServiceReturnType['deletePostRT']['data'], undefined>['deletePost'];
   getPostRT: PostServiceReturnType['getPostRT'];
+  listPostsRT: PostServiceReturnType['listPostsRT'];
 };
 
 export default usePost;

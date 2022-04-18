@@ -2,13 +2,14 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api';
 
 import { createPost, deletePost, updatePost } from '../graphql/mutations';
-import { getPost } from '../graphql/queries';
+import { getPost, listPosts } from '../graphql/queries';
 import {
   CreatePostInput,
   CreatePostMutation,
   DeletePostInput,
   DeletePostMutation,
   GetPostQuery,
+  ListPostsQuery,
   UpdatePostInput,
   UpdatePostMutation,
 } from '../API';
@@ -35,6 +36,11 @@ const PostService = {
     }
     return undefined;
   },
+
+  listPosts: async () => {
+    const result = (await API.graphql(graphqlOperation(listPosts))) as GraphQLResult<ListPostsQuery>;
+    return result.data?.listPosts;
+  },
 };
 
 export type PostServiceReturnType = {
@@ -42,6 +48,7 @@ export type PostServiceReturnType = {
   updatePostRT: PromiseType<ReturnType<typeof PostService.updatePost>>;
   deletePostRT: PromiseType<ReturnType<typeof PostService.deletePost>>;
   getPostRT: PromiseType<ReturnType<typeof PostService.getPost>>;
+  listPostsRT: PromiseType<ReturnType<typeof PostService.listPosts>>;
 };
 
 export default PostService;
